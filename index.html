@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Challenge</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #32cd32;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+        }
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #32cd32;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Little Challenge</h1>
+    <div class="story">
+        <p id="story-text">Who are you?</p>
+    </div>
+    <div class="answer-input">
+        <input type="text" id="answer" placeholder="Type your answer...">
+        <button class="submit-btn" onclick="checkAnswer()">Submit</button>
+    </div>
+    <div class="result" id="result"></div>
+
+    <script>
+        let stage = 0;
+        let tries = 3;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const resultDiv = document.getElementById('result');
+            const storyText = document.getElementById('story-text');
+
+            if (stage === 0) {
+                storyText.innerHTML = "Not yet... Find out my philosophy and I'll tell you. Riddle: 'I dance on the edge of time, yet never leave a trace, In memories I linger, but soon I’m out of place. What am I?'"; 
+                stage = 1;
+            } else if (stage === 1) {
+                if (userAnswer === 'time') {
+                    storyText.innerHTML = "Correct! Now... you have to find the answers to each riddle and unscramble the words to find my little secret...";
+                    stage = 2;
+                } else {
+                    tries--;
+                    resultDiv.innerHTML = tries > 0 ? `X - Be careful, you only get ${tries} tries...` : "Boom, a house in every neighborhood gone...";
+                    if (tries === 0) {
+                        storyText.innerHTML = "The city blows up...";
+                        return;
+                    }
+                }
+            } else if (stage === 2) {
+                storyText.innerHTML = "Riddle 1: 'I end what begins and silence what speaks...'";
+                if (userAnswer === 'killed') {
+                    storyText.innerHTML = "Riddle 2: 'I am the one who sees but cannot be seen...'";
+                    stage = 3;
+                } else {
+                    resultDiv.innerHTML = `X - Try again.`;
+                }
+            } else if (stage === 3) {
+                if (userAnswer === 'i') {
+                    storyText.innerHTML = "Riddle 3: 'I stand between half and a century’s reign...'";
+                    stage = 4;
+                } else {
+                    resultDiv.innerHTML = `X - Try again.`;
+                }
+            } else if (stage === 4) {
+                if (userAnswer === '50') {
+                    storyText.innerHTML = "Correct! What's my secret?";
+                    stage = 5;
+                } else {
+                    resultDiv.innerHTML = `X - Try again.`;
+                }
+            } else if (stage === 5) {
+                if (userAnswer === 'i killed 50 people') {
+                    storyText.innerHTML = "Correct! Oh, but don't tell anyone...";
+                    stage = 6;
+                } else {
+                    resultDiv.innerHTML = `X - Try again.`;
+                }
+            } else if (stage === 6) {
+                storyText.innerHTML = "Now that you've figured me out, I should tell you who I am... I am-";
+                setTimeout(() => {
+                    document.body.style.backgroundColor = "black";
+                    document.body.innerHTML = "";  // Clear the page, simulating a blackout.
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
